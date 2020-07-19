@@ -396,8 +396,11 @@ class CatapultDb {
 		const buildConditions = () => {
 			const conditions = [];
 
-			if (options.offset)
-				conditions.push({ [sortingOptions[options.sortField]]: { [1 === options.sortDirection ? '$gt' : '$lt']: options.offset } });
+			if (options.offset) {
+				conditions.push(
+					{ [sortingOptions[options.sortField]]: { [1 === options.sortDirection ? '$gt' : '$lt']: new ObjectId(options.offset) } }
+				);
+			}
 
 			if (filters.height)
 				conditions.push({ 'meta.height': convertToLong(filters.height) });
